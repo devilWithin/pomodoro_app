@@ -12,6 +12,7 @@ class HomeLayout extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+          backgroundColor: Colors.white,
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             iconSize: 30,
@@ -51,7 +52,11 @@ class HomeLayout extends StatelessWidget {
               ),
             ],
           ),
-          body: PomodoroCubit.get(context).screens(),
+          body: Builder(
+            builder: (BuildContext context) {
+              return PomodoroCubit.get(context).screens();
+            },
+          ),
         );
       },
     );

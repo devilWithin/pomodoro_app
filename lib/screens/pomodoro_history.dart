@@ -17,8 +17,10 @@ class _PomodoroHistoryState extends State<PomodoroHistory> {
       body: ValueListenableBuilder<Box<Pomodoro>>(
         valueListenable: Boxes.getPomodoros().listenable(),
         builder: (context, box, _) {
+
           final pomodoros = box.values.toList().cast<Pomodoro>();
           print(pomodoros);
+
           return Container(
             height: double.infinity,
             width: double.infinity,
