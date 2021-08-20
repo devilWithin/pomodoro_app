@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pomodoro_app/cubit/cubit.dart';
 import 'package:pomodoro_app/models/pomodoro.dart';
-import 'package:pomodoro_app/screens/pomodoro_screen.dart';
+import 'package:pomodoro_app/screens/home_layout.dart';
 import 'package:pomodoro_app/shared/constants.dart';
 
 Future main() async {
@@ -20,14 +22,17 @@ Future main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // CUSTOMIZE showDatePicker Colors
-        colorScheme: ColorScheme.light(primary: kHeavyPinkColor),
-        buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+    return BlocProvider(
+      create: (context) => PomodoroCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          // CUSTOMIZE showDatePicker Colors
+          colorScheme: ColorScheme.light(primary: kHeavyPinkColor),
+          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+        ),
+        home: HomeLayout(),
       ),
-      home: PomodoroScreen(),
     );
   }
 }

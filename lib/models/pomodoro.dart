@@ -9,6 +9,6 @@ class Pomodoro extends HiveObject {
   late String name;
 
   @HiveField(1)
-  late String date;
+  late DateTime date;
 
 }
