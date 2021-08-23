@@ -14,6 +14,7 @@ class HomeLayout extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.white,
           bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.white,
             type: BottomNavigationBarType.fixed,
             iconSize: 30,
             showSelectedLabels: true,

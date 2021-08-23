@@ -6,9 +6,9 @@ part 'pomodoro.g.dart';
 class Pomodoro extends HiveObject {
 
   @HiveField(0)
-  late String name;
+  late String date;
 
   @HiveField(1)
-  late DateTime date;
+  late String time;
 
 }

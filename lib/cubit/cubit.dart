@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:pomodoro_app/cubit/states.dart';
 import 'package:pomodoro_app/models/boxes.dart';
 import 'package:pomodoro_app/models/pomodoro.dart';
@@ -18,8 +19,10 @@ class PomodoroCubit extends Cubit<PomodoroStates> {
   int currentIndex = 0;
   bool pomodoroOff = true;
   late int currentSeconds = totalSeconds;
-  int totalSeconds = 1500;
+  int totalSeconds = 10;
   Timer? timer;
+  String finalTime = DateFormat.yMMMMd().format(DateTime.now());
+  String clockMin = DateFormat('kk:mm a').format(DateTime.now());
 
   void changeIndex(int index) {
     currentIndex = index;
@@ -32,12 +35,19 @@ class PomodoroCubit extends Cubit<PomodoroStates> {
         SettingsScreen(),
       ][currentIndex];
 
-  void addPomodoro(String name) {
+
+  void addPomodoro() {
     Pomodoro pomodoro = Pomodoro()
-      ..date = DateTime.now()
-      ..name = name;
+      ..date = finalTime
+      ..time = clockMin;
     final box = Boxes.getPomodoros();
     box.add(pomodoro);
+  }
+
+  void deletePomodoro(Pomodoro pomodoro) {
+    pomodoro.delete().then((value) {
+      emit(PomodoroDeleted());
+    });
   }
 
   void pauseOrPlay() {
@@ -50,6 +60,7 @@ class PomodoroCubit extends Cubit<PomodoroStates> {
     }
   }
 
+
   void stopTimer() {
     if (timer == null) {
       return null;
@@ -57,7 +68,7 @@ class PomodoroCubit extends Cubit<PomodoroStates> {
       timer!.cancel();
       timer = null;
       pomodoroOff = true;
-      currentSeconds = 1500;
+      currentSeconds = 10;
       emit(TimerStopped());
       print('Timer stopped');
     }
@@ -69,25 +80,10 @@ class PomodoroCubit extends Cubit<PomodoroStates> {
       emit(TimerStarted());
       currentSeconds--;
       if (currentSeconds <= 0) {
-        timer.cancel();
-        emit(TimerStopped());
+        addPomodoro();
+        stopTimer();
+        emit(TimerFinished());
       }
-
-      // emit(TimerStarted());
-      // print('Timer is working');
-      // if (seconds > 0) {
-      //   seconds--;
-      // } else {
-      //   if (minutes > 0) {
-      //     seconds = 59;
-      //     minutes--;
-      //   } else {
-      //     timer.cancel();
-      //     pomodoroOff = true;
-      //     emit(TimerStopped());
-      //     print("Timer Complete");
-      //   }
-      // }
     });
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pomodoro_app/cubit/cubit.dart';
 import 'package:pomodoro_app/cubit/states.dart';
@@ -10,15 +9,12 @@ import 'package:pomodoro_app/shared/constants.dart';
 class PomodoroScreen extends StatelessWidget {
   final nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  final time = NumberFormat("00");
-
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PomodoroCubit, PomodoroStates>(
       listener: (context, state) {},
       builder: (context, state) {
-
         var cubit = PomodoroCubit.get(context);
 
         return SingleChildScrollView(
@@ -41,7 +37,7 @@ class PomodoroScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 50),
                     CircularPercentIndicator(
-                      percent: (cubit.totalSeconds -  cubit.currentSeconds) / cubit.totalSeconds,
+                      percent: (cubit.totalSeconds - cubit.currentSeconds) / cubit.totalSeconds,
                       radius: 350.0,
                       lineWidth: 20.0,
                       progressColor: kHeavyPinkColor,
@@ -81,18 +77,17 @@ class PomodoroScreen extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 40,
                             backgroundColor: kHeavyPinkColor,
-                            child:
-                                cubit.pomodoroOff == true
-                                    ? Icon(
-                                        Icons.play_arrow,
-                                        color: Colors.white,
-                                        size: 40,
-                                      )
-                                    : Icon(
-                                        Icons.pause,
-                                        color: Colors.white,
-                                        size: 40,
-                                      ),
+                            child: cubit.pomodoroOff == true
+                                ? Icon(
+                                    Icons.play_arrow,
+                                    color: Colors.white,
+                                    size: 40,
+                                  )
+                                : Icon(
+                                    Icons.pause,
+                                    color: Colors.white,
+                                    size: 40,
+                                  ),
                           ),
                           onTap: () {
                             cubit.pauseOrPlay();
@@ -128,17 +123,15 @@ class PomodoroScreen extends StatelessWidget {
 }
 
 class TimerText extends StatelessWidget {
-
   final int sec;
 
-  const TimerText({Key? key,required this.sec}) : super(key: key);
-
+  const TimerText({Key? key, required this.sec}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-   final minutes = sec ~/ 60;
-   final min = minutes < 10 ? '0' + minutes.toString() : minutes.toString();
-   final seconds = sec % 60 < 10 ? '0' + (sec % 60).toString() : sec % 60;
+    final minutes = sec ~/ 60;
+    final min = minutes < 10 ? '0' + minutes.toString() : minutes.toString();
+    final seconds = sec % 60 < 10 ? '0' + (sec % 60).toString() : sec % 60;
     return Text(
       "$min:$seconds",
       style: TextStyle(
