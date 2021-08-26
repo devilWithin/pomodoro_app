@@ -21,8 +21,7 @@ class _PomodoroHistoryState extends State<PomodoroHistory> {
             ? Center(
                 child: Text(
                   'No Pomodoros Completed Yet!',
-                  style: TextStyle(
-                    color: kHeavyPinkColor,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -32,7 +31,7 @@ class _PomodoroHistoryState extends State<PomodoroHistory> {
                 height: double.infinity,
                 width: double.infinity,
                 padding: EdgeInsets.all(20),
-                color: Colors.white,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 child: ListView.separated(
                   physics: BouncingScrollPhysics(),
                   separatorBuilder: (context, index) => Container(
@@ -50,8 +49,8 @@ class _PomodoroHistoryState extends State<PomodoroHistory> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            kHeavyPinkColor,
-                            kLightPinkColor,
+                            PomodoroCubit.get(context).isDark ? Colors.black : kHeavyPinkColor,
+                            PomodoroCubit.get(context).isDark ? Colors.white : kLightPinkColor,
                           ],
                           stops: [
                             0.5,
@@ -76,18 +75,18 @@ class _PomodoroHistoryState extends State<PomodoroHistory> {
                             children: [
                               Text(
                                 '${pomodoros[index].date}',
-                                style: TextStyle(
-                                  color: Colors.white,
+                                style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                   fontSize: 20,
                                 ),
                               ),
                               const SizedBox(height: 10),
                               Text(
                                 '${pomodoros[index].time}',
-                                style: TextStyle(
-                                  color: kHeavyPurpleColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: Theme.of(context).textTheme.bodyText1,
+                                // TextStyle(
+                                //   color: kHeavyPurpleColor,
+                                //   fontWeight: FontWeight.w500,
+                                // ),
                               ),
                             ],
                           ),
@@ -97,7 +96,7 @@ class _PomodoroHistoryState extends State<PomodoroHistory> {
                               padding: const EdgeInsets.all(15.0),
                               child: Icon(
                                 Icons.delete,
-                                size: 30,
+                                size: Theme.of(context).iconTheme.size,
                                 color: kHeavyPurpleColor,
                               ),
                             ),

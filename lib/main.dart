@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pomodoro_app/cubit/cubit.dart';
+import 'package:pomodoro_app/cubit/states.dart';
 import 'package:pomodoro_app/models/pomodoro.dart';
 import 'package:pomodoro_app/screens/home_layout.dart';
-import 'package:pomodoro_app/shared/constants.dart';
+import 'package:pomodoro_app/shared/styles/themes.dart';
 
 Future main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -24,14 +25,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PomodoroCubit(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          // CUSTOMIZE showDatePicker Colors
-          colorScheme: ColorScheme.light(primary: kHeavyPinkColor),
-          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
-        ),
-        home: HomeLayout(),
+      child: BlocConsumer<PomodoroCubit, PomodoroStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: PomodoroCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
+            home: HomeLayout(),
+          );
+        },
       ),
     );
   }

@@ -15,3 +15,5 @@ class PomodoroIsPlayed extends PomodoroStates {}
 class TimerFinished extends PomodoroStates {}
 
 class PomodoroDeleted extends PomodoroStates {}
+
+class ChangeAppMode extends PomodoroStates {}

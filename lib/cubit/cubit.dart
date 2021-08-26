@@ -35,7 +35,6 @@ class PomodoroCubit extends Cubit<PomodoroStates> {
         SettingsScreen(),
       ][currentIndex];
 
-
   void addPomodoro() {
     Pomodoro pomodoro = Pomodoro()
       ..date = finalTime
@@ -49,6 +48,16 @@ class PomodoroCubit extends Cubit<PomodoroStates> {
       emit(PomodoroDeleted());
     });
   }
+
+  bool isDark = false;
+
+  void changeAppMode(){
+    isDark =! isDark;
+    print(isDark);
+    print('Changed App Mode');
+    emit(ChangeAppMode());
+  }
+
 
   void pauseOrPlay() {
     if (pomodoroOff == false) {
